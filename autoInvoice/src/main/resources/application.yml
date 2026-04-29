@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: invoice-agent-system
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+# Agent 配置
+agent:
+  ocr:
+    # 可选: mock, tencent, baidu
+    provider: mock
+    timeout: 30000
+    retry:
+      max-attempts: 3
+      delay: 1000
+  validation:
+    # 金额上限
+    max-amount: 9999999.99
+    # 税号长度
+    tax-no-length: 15
+  classification:
+    # 分类规则映射
+    rules:
+      科技: IT服务
+      咨询: 咨询服务
+      餐饮: 餐饮服务
+      交通: 交通出行
+      住宿: 差旅住宿
+      办公: 办公用品
+      default: 其他
+
+# 流程编排配置
+orchestrator:
+  # 是否启用异步批量处理
+  async-enabled: true
+  # 批量处理线程池大小
+  thread-pool-size: 4
+  # 单次处理超时(ms)
+  process-timeout: 60000
+
+logging:
+  level:
+    com.example.agent: DEBUG
